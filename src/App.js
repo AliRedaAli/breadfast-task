@@ -1,28 +1,64 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Appbar from './Components/Appbar'
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import List from './Components/Pages/List';
+import Details from './Components/Pages/Details';
+import Cart from './Components/Pages/Cart';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = {
+  AppContainer: {
+    marginTop: 25,
+  },
+};
 
 class App extends Component {
   render() {
+    const { classes } = this.props;
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Fragment>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <CssBaseline />
+        <Router>
+          <Fragment>
+            <Appbar/>
+
+            <Grid
+              className={classes.AppContainer}
+              container
+              direction="row"
+              justify="center"
+              alignItems="center">
+
+                <Grid 
+                  item 
+                  xs={8}>
+                                    
+                    <Route exact  path="/" component={List} />
+
+                    <Route path="/product/:id" component={Details} />
+                  
+                    <Route path="/cart" component={Cart} />
+                  
+                  </Grid>
+                
+                </Grid>
+            
+            
+          </Fragment>
+        </Router>        
+      </Fragment>      
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(App);
