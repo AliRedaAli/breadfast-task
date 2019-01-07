@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const styles = {
   root: {
@@ -25,7 +26,7 @@ class Appbar extends Component {
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Breadfast Task
             </Typography>
-            <Button size="small" color="inherit">
+            <Button size="small" component={Link} to="/" color="inherit">
               Products List
             </Button>
             <Button size="small" color="inherit">View Cart</Button>
