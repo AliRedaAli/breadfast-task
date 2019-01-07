@@ -37,6 +37,12 @@ class Appbar extends Component {
   toggleCart = () =>{
     this.props.toggleDrawer()
   }
+  
+  cartCount = ()=>(
+    this.props.cart.reduce((total,product)=>(
+      total + product.qty
+    ),0)
+  )
 
   render() {
     const {classes} = this.props
@@ -52,7 +58,7 @@ class Appbar extends Component {
             </Button>
 
             <IconButton aria-label="Cart" className={classes.cartIcon} onClick={this.toggleCart}>
-            <Badge badgeContent={this.props.cart.length} color="primary" classes={{ badge: classes.badge }}>
+            <Badge badgeContent={this.cartCount()} color="primary" classes={{ badge: classes.badge }}>
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
