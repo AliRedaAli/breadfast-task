@@ -6,15 +6,30 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
+import Badge from '@material-ui/core/Badge';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1,
   },
   grow: {
     flexGrow: 1,
+  },
+  cartIcon:{
+    color:"#f5f5f5"
+  },
+  badge: {
+    top: 1,
+    right: -15,
+    // The border color match the background color.
+    border: `2px solid ${
+      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
+    }`,
   }
-};
+
+});
 
 class Appbar extends Component {
   render() {
@@ -29,7 +44,13 @@ class Appbar extends Component {
             <Button size="small" component={Link} to="/" color="inherit">
               Products List
             </Button>
-            <Button size="small" color="inherit">View Cart</Button>
+
+            <IconButton aria-label="Cart" className={classes.cartIcon}>
+            <Badge badgeContent={4} color="primary" classes={{ badge: classes.badge }}>
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+
           </Toolbar>
         </AppBar>
       </div>
