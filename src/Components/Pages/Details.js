@@ -7,6 +7,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { Button, TextField } from '@material-ui/core';
+import { addToCart,increaseQty } from "../../Actions/cartActions";
+import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom'
 
 const styles = {
   card: {
@@ -34,7 +37,7 @@ class Details extends Component {
         product: localstorageState.products.find((product)=>{
           return product.id == this.props.match.params.id
         })
-      })  
+      })
     }
   }
   
@@ -44,18 +47,42 @@ class Details extends Component {
     }
   };
 
+  addToCart = () => {
+    const {qty} = this.state;
+
+    if(this.isAdded()){
+      this.props.increaseQty(this.state.product.id,parseInt(qty))
+    }else{
+      let data = {...this.state.product,qty:parseInt(qty)}
+      this.props.addToCart(data)
+    }
+  }
+
+  isAdded = ()=>{
+    let cartProduct = this.props.cart.find((cartProduct)=>{
+      return this.state.product.id === cartProduct.id
+    })
+    return cartProduct
+    
+  }
+
   render() {
     const { classes } = this.props;
     const {product} = this.state;
+
+    if (!product) {
+      return <Redirect to="/" push={true} />
+    }
+    
     return (
       <Fragment>
+
         <Grid 
           container 
           justify="flex-start"
           spacing={24}>
 
             <Grid item xs={1} md={6}>
-
               <Card className={classes.card}>
                   <CardMedia
                     className={classes.media}
@@ -63,27 +90,26 @@ class Details extends Component {
                     title="Contemplative Reptile"
                   />
               </Card>
-            
             </Grid>
+
             <Grid item xs={1} md={6}>
               <Typography component="h1" variant="h2" gutterBottom>
                 {product.name}
               </Typography>
-              <Typography component="p" variant="p" gutterBottom>
+              <Typography component="p" variant="body1" gutterBottom>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam placerat leo ut velit convallis lobortis.
               </Typography>
               <Typography component="h5" variant="h5" gutterBottom>
                 Price: {Number(product.price).toFixed(2).toLocaleString()} EGP
               </Typography>
               <Grid container direction='row' alignItems='center'>
-                <Grid item xs='6'>
+                <Grid item xs={6}>
                   <TextField
                     id="outlined-number"
                     label="QTY"
                     value={this.state.qty}
                     onChange={this.handleChange}
                     type="number"
-                    className={classes.textField}
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -91,8 +117,8 @@ class Details extends Component {
                     variant="outlined"
                   />
                 </Grid>
-                <Grid item xs='6'>
-                  <Button variant="contained" color='primary'>
+                <Grid item xs={6}>
+                  <Button variant="contained" color='primary' onClick={this.addToCart}>
                     Add To Cart
                   </Button>
               </Grid>
@@ -108,4 +134,8 @@ Details.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Details);
+const mapStateToProps = (state)=> ({
+  cart: state.cart
+})
+
+export default connect(mapStateToProps,{addToCart,increaseQty})(withStyles(styles)(Details));

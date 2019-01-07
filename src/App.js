@@ -6,8 +6,8 @@ import Appbar from './Components/Appbar'
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import List from './Components/Pages/List';
 import Details from './Components/Pages/Details';
-import Cart from './Components/Pages/Cart';
 import { withStyles } from '@material-ui/core/styles';
+import CartDrawer from './Components/Partials/CartDrawer';
 
 const styles = {
   AppContainer: {
@@ -27,7 +27,7 @@ class App extends Component {
         <Router>
           <Fragment>
             <Appbar/>
-
+            <CartDrawer/>
             <Grid
               className={classes.AppContainer}
               container
@@ -42,9 +42,7 @@ class App extends Component {
                     <Route exact  path="/" component={List} />
 
                     <Route path="/product/:id" component={Details} />
-                  
-                    <Route path="/cart" component={Cart} />
-                  
+                                    
                   </Grid>
                 
                 </Grid>
