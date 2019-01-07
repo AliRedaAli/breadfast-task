@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import {connect} from 'react-redux';
-import { toggleDrawer } from "../../Actions/cartActions";
+import { toggleDrawer,removeCart } from "../../Actions/cartActions";
 import Drawer from '@material-ui/core/Drawer';
-import { List, Divider, ListItem, ListItemText, Grid, Typography  } from '@material-ui/core';
+import { List, Divider, ListItem, ListItemText, Grid, Typography, IconButton, Button, Fab  } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 class CartDrawer extends Component {
     constructor(props) {
@@ -17,6 +18,11 @@ class CartDrawer extends Component {
     toggleCart = () =>{
         this.props.toggleDrawer()
     }
+    
+    removeCart = (id) =>{
+        this.props.removeCart(id)
+    }
+
     render() {
         const cartList = (
             <div>
@@ -34,8 +40,13 @@ class CartDrawer extends Component {
                                     </Typography>
                                     <ListItemText primary={Number(product.price).toFixed(2).toLocaleString() + ' x ' + product.qty} />
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item xs={1}>
                                     <ListItemText primary={parseInt(product.qty) * parseInt(product.price)} />
+                                </Grid>
+                                <Grid item xs={1}>
+                                    <Fab onClick={()=>{this.removeCart(product.id)}} size="small" color="secondary" aria-label="Remove">
+                                        <RemoveIcon />
+                                    </Fab>
                                 </Grid>
                             </Grid>
                         </ListItem>
@@ -111,4 +122,4 @@ const mapStateToProps = (state)=>({
     cartOpened:state.cartOpened,
     cart:state.cart
 })
-export default connect(mapStateToProps,{toggleDrawer})(CartDrawer)
+export default connect(mapStateToProps,{toggleDrawer,removeCart})(CartDrawer)

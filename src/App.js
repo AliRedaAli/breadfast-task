@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Appbar from './Components/Appbar'
+import Appbar from './Components/Partials/Appbar'
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import List from './Components/Pages/List';
 import Details from './Components/Pages/Details';

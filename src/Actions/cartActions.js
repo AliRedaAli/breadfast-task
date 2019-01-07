@@ -1,4 +1,4 @@
-import {ADD_TO_CART, INCREASE_QTY,CHANGE_QTY, TOGGLE_DRAWER} from '../Enum'
+import {ADD_TO_CART, INCREASE_QTY, REMOVE_CART, TOGGLE_DRAWER} from '../Enum'
 
 export function addToCart(product){
     return {
@@ -14,10 +14,10 @@ export function increaseQty(id,qty = 1){
     }
 }
 
-export function changeQty(qty = 1){
+export function removeCart(id){
     return {
-        type: CHANGE_QTY,
-        payload:qty
+        type: REMOVE_CART,
+        payload:id
     }
 }
 

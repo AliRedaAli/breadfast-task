@@ -1,4 +1,4 @@
-import {ADD_TO_CART,INCREASE_QTY} from '../Enum'
+import {ADD_TO_CART,INCREASE_QTY,REMOVE_CART} from '../Enum'
 
 export default (state = null,action) => {
     let newState = Object.assign([],state);
@@ -7,8 +7,12 @@ export default (state = null,action) => {
             newState.push(action.payload)
             break;
         case INCREASE_QTY:
-            let productPos = newState.map(function(product) {return product.id; }).indexOf(action.payload.id);
+            var productPos = newState.map((product) => (product.id)).indexOf(action.payload.id);
             newState[productPos].qty += action.payload.qty
+            break;
+        case REMOVE_CART:
+            var productPos = newState.map((product) => (product.id)).indexOf(action.payload);
+            delete newState[productPos]
             break;
         default:
     }
