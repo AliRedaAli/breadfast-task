@@ -83,7 +83,7 @@ class CartDrawer extends Component {
                     <Grid item xs={12}>
                         <ShoppingCartIcon style={{fontSize:200 , color:"#eeeeee"}}/>
                     </Grid>
-                    <Grid item xs={12} ali>
+                    <Grid item xs={12}>
                         <Typography  align="center" component="h3" variant="title">
                             Cart is Empty
                         </Typography>

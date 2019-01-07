@@ -12,7 +12,7 @@ export default (state = null,action) => {
             break;
         case REMOVE_CART:
             var productPos = newState.map((product) => (product.id)).indexOf(action.payload);
-            delete newState[productPos]
+            newState.splice(productPos, 1);
             break;
         default:
     }
